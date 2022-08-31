@@ -1,4 +1,4 @@
-package com.blackdog.dabang.common.success;
+package com.blackdog.dabang.common.response.success;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;

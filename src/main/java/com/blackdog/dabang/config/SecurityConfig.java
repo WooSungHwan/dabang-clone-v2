@@ -60,6 +60,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/", "/favicon.ico", "/resources/**", "/error/**")
                 .permitAll()
+                .antMatchers("/api/v1/healths/**")
+                .permitAll()
                 .antMatchers("/api/v1/**")
                 .authenticated()
                 .anyRequest()

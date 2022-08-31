@@ -1,10 +1,9 @@
 package com.blackdog.dabang.config.security;
 
-import com.blackdog.dabang.common.error.ErrorCode;
-import com.blackdog.dabang.common.error.ErrorResponse;
+import com.blackdog.dabang.common.response.error.ErrorCode;
+import com.blackdog.dabang.common.response.error.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

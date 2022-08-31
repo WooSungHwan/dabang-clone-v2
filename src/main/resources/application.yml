@@ -20,6 +20,7 @@ spring:
       ddl-auto: create
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    open-in-view: false
 
 dabang:
   jwt:
