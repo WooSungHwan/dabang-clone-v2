@@ -20,3 +20,8 @@ spring:
       ddl-auto: create
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+
+dabang:
+  jwt:
+    secret: dabang-secret-key
+    expiration: 28800000
