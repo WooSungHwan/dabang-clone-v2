@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserStore store;
-//    private final UserReader reader;
+    private final UserReader reader;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional

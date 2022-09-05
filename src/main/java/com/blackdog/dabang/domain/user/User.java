@@ -46,7 +46,7 @@ public class User {
     }
 
     public void setEncodedPassword(String encodedPassword) {
-        this.password = password;
+        this.password = encodedPassword;
     }
 
 }
