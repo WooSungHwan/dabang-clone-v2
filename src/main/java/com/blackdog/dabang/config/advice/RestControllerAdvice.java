@@ -1,9 +1,8 @@
 package com.blackdog.dabang.config.advice;
 
-import com.blackdog.dabang.common.exception.DomainException;
+import com.blackdog.dabang.common.exception.DabangBaseException;
 import com.blackdog.dabang.common.response.error.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,8 +21,9 @@ public final class RestControllerAdvice {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = DomainException.class)
-    public ErrorResponse handlerDomainException(DomainException e) {
+    @ExceptionHandler(value = DabangBaseException.class)
+    public ErrorResponse handlerDabangBaseException(DabangBaseException e) {
         return ErrorResponse.of(e.getErrorCode());
     }
+
 }

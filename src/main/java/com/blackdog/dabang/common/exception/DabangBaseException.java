@@ -4,23 +4,23 @@ import com.blackdog.dabang.common.response.error.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class DomainException extends RuntimeException {
+public class DabangBaseException extends RuntimeException {
     private ErrorCode errorCode;
 
-    public DomainException() {
+    public DabangBaseException() {
     }
 
-    public DomainException(ErrorCode errorCode) {
+    public DabangBaseException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
 
-    public DomainException(String message, ErrorCode errorCode) {
+    public DabangBaseException(String message, ErrorCode errorCode) {
         super(message);
         this.errorCode = errorCode;
     }
 
-    public DomainException(String message, ErrorCode errorCode, Throwable cause) {
+    public DabangBaseException(String message, ErrorCode errorCode, Throwable cause) {
         super(message, cause);
         this.errorCode = errorCode;
     }
