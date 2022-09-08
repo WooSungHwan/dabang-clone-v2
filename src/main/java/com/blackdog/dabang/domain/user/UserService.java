@@ -7,4 +7,6 @@ public interface UserService {
 
     UserJoinResponse join(UserJoinCommand command);
 
+    UserJoinResponse agentJoin(UserJoinCommand command);
+
 }

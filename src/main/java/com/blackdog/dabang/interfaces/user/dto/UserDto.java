@@ -2,10 +2,16 @@ package com.blackdog.dabang.interfaces.user.dto;
 
 import com.blackdog.dabang.domain.user.User;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
+import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddRequest;
+import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddResponse;
+import java.util.stream.Stream;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Value;
+import org.springframework.validation.annotation.Validated;
 
 public class UserDto {
 
@@ -29,7 +35,6 @@ public class UserDto {
                     .name(name)
                     .build();
         }
-
     }
 
     @Getter
@@ -47,4 +52,21 @@ public class UserDto {
         }
     }
 
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class UserAgentJoinRequest {
+        @Valid
+        private UserJoinRequest userJoinRequest;
+
+        @Valid
+        private AgentAddRequest agentAddRequest;
+    }
+
+    @Value(staticConstructor = "of")
+    public static class UserAgentJoinResponse {
+        private UserJoinResponse user;
+
+        private AgentAddResponse agent;
+    }
 }

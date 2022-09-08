@@ -2,7 +2,10 @@ package com.blackdog.dabang.interfaces.user.controller;
 
 import com.blackdog.dabang.application.user.UserFacade;
 import com.blackdog.dabang.common.response.success.RestResponse;
+import com.blackdog.dabang.domain.user.agent.AgentCommand.AgentAddCommand;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
+import com.blackdog.dabang.interfaces.user.dto.UserDto.UserAgentJoinRequest;
+import com.blackdog.dabang.interfaces.user.dto.UserDto.UserAgentJoinResponse;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserJoinRequest;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserJoinResponse;
 import com.blackdog.dabang.interfaces.user.mapper.UserMapper;
@@ -25,6 +28,11 @@ public class UserController {
     private final UserFacade facade;
     private final UserMapper mapper;
 
+    /**
+     * 일반 유저 등록.
+     * @param userJoinRequest
+     * @return
+     */
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestResponse> join(@RequestBody @Validated UserJoinRequest userJoinRequest) {
         UserJoinCommand command = mapper.toUserJoinCommand(userJoinRequest);
@@ -32,4 +40,16 @@ public class UserController {
         return ResponseEntity.ok(RestResponse.of(response));
     }
 
+    /**
+     * 부동산 유저 등록.
+     * @param userAgentJoinRequest
+     * @return
+     */
+    @PostMapping(value = "/agent", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestResponse> agentJoin(@RequestBody UserAgentJoinRequest userAgentJoinRequest) {
+        UserJoinCommand userJoinCommand = mapper.toUserJoinCommand(userAgentJoinRequest.getUserJoinRequest());
+        AgentAddCommand agentAddCommand = mapper.toAgentAddCommand(userAgentJoinRequest.getAgentAddRequest());
+        UserAgentJoinResponse response = facade.agentJoin(userJoinCommand, agentAddCommand);
+        return ResponseEntity.ok(RestResponse.of(response));
+    }
 }

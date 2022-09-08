@@ -1,13 +1,18 @@
 package com.blackdog.dabang.domain.user;
 
+import static javax.persistence.EnumType.STRING;
+
 import com.blackdog.dabang.common.exception.InvalidParameterException;
 import java.util.function.Supplier;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,8 +39,12 @@ public class User {
     @Column(name = "password", columnDefinition = "text")
     private String password;
 
+    @Enumerated(STRING)
+    @Column(name = "type", length = 10)
+    private UserType type;
+
     @Builder
-    public User(String name, String id, String password) {
+    public User(String name, String id, String password, UserType type) {
         if (StringUtils.isBlank(name)) throw new InvalidParameterException("User.name");
         if (StringUtils.isBlank(id)) throw new InvalidParameterException("User.id");
         if (StringUtils.isBlank(password)) throw new InvalidParameterException("User.password");
@@ -43,10 +52,21 @@ public class User {
         this.name = name;
         this.id = id;
         this.password = password;
+        this.type = type;
     }
 
     public void setEncodedPassword(String encodedPassword) {
         this.password = encodedPassword;
     }
 
+    @Getter
+    @AllArgsConstructor
+    public enum UserType {
+
+        NORMAL("일반유저"),
+        AGENT("부동산유저");
+
+        private String name;
+
+    }
 }
