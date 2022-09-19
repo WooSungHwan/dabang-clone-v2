@@ -5,8 +5,8 @@ import com.blackdog.dabang.domain.user.agent.AgentCommand.AgentAddCommand;
 
 public interface AgentStore {
 
-    Agent addAgent(AgentAddCommand command);
+    Agent addAgent(Agent agent);
 
-    AgentUserMapping mappingAgentWithUser(User user, Agent agent);
+    AgentUserMapping mappingAgentWithUser(AgentUserMapping mapping);
 
 }

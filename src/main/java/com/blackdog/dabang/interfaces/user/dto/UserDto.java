@@ -1,6 +1,7 @@
 package com.blackdog.dabang.interfaces.user.dto;
 
 import com.blackdog.dabang.domain.user.User;
+import com.blackdog.dabang.domain.user.User.UserType;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
 import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddRequest;
 import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddResponse;
@@ -45,10 +46,13 @@ public class UserDto {
 
         private String id;
 
+        private UserType type;
+
         public UserJoinResponse(User user) {
             this.seq = user.getSeq();
             this.name = user.getName();
             this.id = user.getId();
+            this.type = user.getType();
         }
     }
 

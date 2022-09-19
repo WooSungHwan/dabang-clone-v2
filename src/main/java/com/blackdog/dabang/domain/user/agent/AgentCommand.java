@@ -14,6 +14,13 @@ public class AgentCommand {
         private String businessId;
         private String tel;
 
+        public Agent toEntity() {
+            return Agent.builder()
+                    .name(agentName)
+                    .businessId(businessId)
+                    .tel(tel)
+                    .build();
+        }
     }
 
 }
