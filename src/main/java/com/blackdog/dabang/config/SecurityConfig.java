@@ -63,7 +63,7 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/api/v1/healths/**")
                 .permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/users/**")
+                .antMatchers(HttpMethod.POST, "/api/v1/users/**", "/api/v1/login/**")
                 .permitAll()
                 .antMatchers("/api/v1/**")
                 .authenticated()

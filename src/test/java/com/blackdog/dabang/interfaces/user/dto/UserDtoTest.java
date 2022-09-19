@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddRequest;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserAgentJoinRequest;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserJoinRequest;
+import com.blackdog.dabang.interfaces.user.dto.UserDto.UserLoginRequest;
 import com.blackdog.dabang.util.Validators;
 import java.util.stream.Stream;
 import javax.validation.ConstraintViolationException;
@@ -40,8 +41,7 @@ public class UserDtoTest {
                 password
         );
 
-        Throwable throwable = catchThrowable(() -> Validators.validate(userJoinRequest));
-        assertThat(throwable).isInstanceOf(ConstraintViolationException.class);
+        validateFromThrowable(userJoinRequest);
     }
 
 
@@ -85,8 +85,8 @@ public class UserDtoTest {
         AgentAddRequest agentAddRequest = new AgentAddRequest(agentName, businessId, tel);
 
         UserAgentJoinRequest userAgentJoinRequest = new UserAgentJoinRequest(userJoinRequest, agentAddRequest);
-        Throwable throwable = catchThrowable(() -> Validators.validate(userAgentJoinRequest));
-        assertThat(throwable).isInstanceOf(ConstraintViolationException.class);
+
+        validateFromThrowable(userAgentJoinRequest);
     }
 
     private static class SuccessUserAgentJoinRequestProvider extends SuccessUserJoinRequestProvider {
@@ -117,4 +117,47 @@ public class UserDtoTest {
         }
     }
 
+    @ArgumentsSource(SuccessUserLoginRequestProvider.class)
+    @ParameterizedTest
+    void 유저로그인_성공(String id, String password) {
+        UserLoginRequest userLoginRequest = new UserLoginRequest(id, password);
+
+        Validators.validate(userLoginRequest);
+    }
+
+    private static class SuccessUserLoginRequestProvider implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    // 아이디, 비밀번호
+                    Arguments.of("blackdog", "blackdogPassword")
+            );
+        }
+    }
+
+    @ArgumentsSource(FailUserLoginRequestProvider.class)
+    @ParameterizedTest
+    void 유저로그인_실패(String id, String password) {
+        UserLoginRequest userLoginRequest = new UserLoginRequest(id, password);
+        validateFromThrowable(userLoginRequest);
+    }
+
+    private static class FailUserLoginRequestProvider implements ArgumentsProvider {
+        @Override
+        public Stream<? extends Arguments> provideArguments(ExtensionContext context) throws Exception {
+            return Stream.of(
+                    // 아이디, 비밀번호
+                    Arguments.of("", "blackdogPassword"),
+                    Arguments.of("blackdog", ""),
+                    Arguments.of("blackdog", null),
+                    Arguments.of(null, "blackdogPassword"),
+                    Arguments.of(null, null)
+            );
+        }
+    }
+
+    private <T> void validateFromThrowable(T request) {
+        Throwable throwable = catchThrowable(() -> Validators.validate(request));
+        assertThat(throwable).isInstanceOf(ConstraintViolationException.class);
+    }
 }

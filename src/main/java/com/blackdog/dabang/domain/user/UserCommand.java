@@ -18,7 +18,7 @@ public class UserCommand {
         public User toNormalUserEntity() {
             return User.builder()
                     .name(name)
-                    .id(id)
+                    .userId(id)
                     .password(password)
                     .type(UserType.NORMAL)
                     .build();
@@ -27,7 +27,7 @@ public class UserCommand {
         public User toAgentUserEntity() {
             return User.builder()
                        .name(name)
-                       .id(id)
+                       .userId(id)
                        .password(password)
                        .type(UserType.AGENT)
                        .build();

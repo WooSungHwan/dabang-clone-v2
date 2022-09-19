@@ -23,7 +23,7 @@ public class UserStoreImpl implements UserStore {
 
     private void validateForStore(User user) {
         if (StringUtils.isBlank(user.getName())) throw new InvalidParameterException("user.name");
-        if (StringUtils.isBlank(user.getId())) throw new InvalidParameterException("user.id");
+        if (StringUtils.isBlank(user.getUserId())) throw new InvalidParameterException("user.id");
         if (StringUtils.isBlank(user.getPassword())) throw new InvalidParameterException("user.password");
     }
 

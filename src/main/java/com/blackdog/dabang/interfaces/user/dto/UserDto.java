@@ -7,6 +7,7 @@ import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddRequest;
 import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddResponse;
 import java.util.stream.Stream;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,13 +21,13 @@ public class UserDto {
     @AllArgsConstructor
     @Getter
     public static class UserJoinRequest {
-        @NotEmpty(message = "이름을 입력해주세요.")
+        @NotBlank(message = "이름을 입력해주세요.")
         private String name;
 
-        @NotEmpty(message = "아이디를 입력해주세요.")
+        @NotBlank(message = "아이디를 입력해주세요.")
         private String id;
 
-        @NotEmpty(message = "비밀번호를 입력해주세요.")
+        @NotBlank(message = "비밀번호를 입력해주세요.")
         private String password;
 
         public UserJoinCommand toCommand() {
@@ -51,7 +52,7 @@ public class UserDto {
         public UserJoinResponse(User user) {
             this.seq = user.getSeq();
             this.name = user.getName();
-            this.id = user.getId();
+            this.id = user.getUserId();
             this.type = user.getType();
         }
     }
@@ -72,5 +73,32 @@ public class UserDto {
         private UserJoinResponse user;
 
         private AgentAddResponse agent;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class UserLoginRequest {
+        @NotBlank(message = "아이디를 입력해주세요.")
+        private String id;
+
+        @NotBlank(message = "비밀번호를 입력해주세요.")
+        private String password;
+    }
+
+    @Value(staticConstructor = "of")
+    public static class UserLoginResponse {
+        private String token;
+    }
+
+    @Value(staticConstructor = "of")
+    public static class UserResponse {
+        private String id;
+
+        private Long seq;
+
+        private String name;
+
+        private UserType type;
     }
 }

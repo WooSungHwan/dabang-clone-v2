@@ -1,5 +1,6 @@
 package com.blackdog.dabang.config.jwt;
 
+import com.blackdog.dabang.config.security.SecurityUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,7 +17,7 @@ public class JwtProvider {
 
     private final JwtProperties jwtProperties;
 
-    public String generateJwtToken(long seq) {
+    public String generateJwtToken(SecurityUserDetails securityUserDetails) {
         Date now = new Date();
         String jwtToken = Jwts.builder()
                 .setSubject("DABANG-SERVER API")
@@ -24,7 +25,9 @@ public class JwtProvider {
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecret())
                 .setExpiration(new Date(now.getTime() + jwtProperties.getExpiration()))
-                .claim("seq", seq)
+                .claim("seq", securityUserDetails.getSeq())
+                .claim("userId", securityUserDetails.getId())
+                .claim("type", securityUserDetails.getType())
                 .compact();
 
         return jwtToken;

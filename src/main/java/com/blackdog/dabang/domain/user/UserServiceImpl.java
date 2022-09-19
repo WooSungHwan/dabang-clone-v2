@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserStore store;
-    private final AgentStore agentStore;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional

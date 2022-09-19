@@ -20,4 +20,10 @@ public class UserReaderImpl implements UserReader {
                          .orElseThrow(EntityNotFoundException::new);
     }
 
+    @Override
+    public User getUserByUserId(String userId) {
+        return repository.findByUserId(userId)
+                         .orElseThrow(EntityNotFoundException::new);
+    }
+
 }

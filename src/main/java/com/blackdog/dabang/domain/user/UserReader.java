@@ -4,4 +4,6 @@ public interface UserReader {
 
     User getUserBySeq(Long seq);
 
+    User getUserByUserId(String userId);
+
 }

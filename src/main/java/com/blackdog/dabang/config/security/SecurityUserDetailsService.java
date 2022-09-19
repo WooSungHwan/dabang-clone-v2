@@ -1,5 +1,7 @@
 package com.blackdog.dabang.config.security;
 
+import com.blackdog.dabang.domain.user.User;
+import com.blackdog.dabang.domain.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,9 +12,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SecurityUserDetailsService implements UserDetailsService {
 
+    private final UserReader userReader;
+
     @Override
-    public UserDetails loadUserByUsername(String seq) throws UsernameNotFoundException {
-        // TODO 추후 유저 도메인 구현시
-        return null;
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        User user = userReader.getUserByUserId(userId);
+        return new SecurityUserDetails(user);
     }
 }

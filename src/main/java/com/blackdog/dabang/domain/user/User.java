@@ -33,8 +33,8 @@ public class User {
     @Column(name = "name", length = 30)
     private String name;
 
-    @Column(name = "id", length = 50)
-    private String id;
+    @Column(name = "user_id", length = 50)
+    private String userId;
 
     @Column(name = "password", columnDefinition = "text")
     private String password;
@@ -44,13 +44,13 @@ public class User {
     private UserType type;
 
     @Builder
-    public User(String name, String id, String password, UserType type) {
+    public User(String name, String userId, String password, UserType type) {
         if (StringUtils.isBlank(name)) throw new InvalidParameterException("User.name");
-        if (StringUtils.isBlank(id)) throw new InvalidParameterException("User.id");
+        if (StringUtils.isBlank(userId)) throw new InvalidParameterException("User.userId");
         if (StringUtils.isBlank(password)) throw new InvalidParameterException("User.password");
 
         this.name = name;
-        this.id = id;
+        this.userId = userId;
         this.password = password;
         this.type = type;
     }
