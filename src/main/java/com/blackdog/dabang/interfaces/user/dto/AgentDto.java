@@ -31,11 +31,25 @@ public class AgentDto {
         private String tel;
 
         public AgentAddResponse(Agent agent) {
-            this.id = agent.getId();
+            this.id = agent.getAgentId();
             this.name = agent.getName();
             this.tel = agent.getTel();
         }
+    }
 
+    @Getter
+    public static class AgentResponse {
+        private String id;
+
+        private String name;
+
+        private String tel;
+
+        public AgentResponse(Agent agent) {
+            this.id = agent.getAgentId();
+            this.name = agent.getName();
+            this.tel = agent.getTel();
+        }
     }
 
 }

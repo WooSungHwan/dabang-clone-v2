@@ -38,7 +38,9 @@ public class SecurityUserDetails implements UserDetails {
             case NORMAL -> {
                 return List.of(new SimpleGrantedAuthority(Role.ROLE_NORMAL));
             }
-            case AGENT -> List.of(new SimpleGrantedAuthority(Role.ROLE_AGENT));
+            case AGENT -> {
+                return List.of(new SimpleGrantedAuthority(Role.ROLE_AGENT));
+            }
         }
         log.error("해당 유저의 상태를 확인해주세요. {}", id);
         throw new IllegalStateException("해당 유저의 상태를 확인해주세요.");

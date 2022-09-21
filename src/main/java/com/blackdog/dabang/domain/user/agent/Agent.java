@@ -25,8 +25,8 @@ public class Agent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
-    @Column(name = "id", length = 50, unique = true)
-    private String id; // 별도의 대체 unique 키
+    @Column(name = "agent_id", length = 50, unique = true)
+    private String agentId; // 별도의 대체 unique 키
 
     @Column(name = "name", length = 50)
     private String name;
@@ -46,6 +46,6 @@ public class Agent {
         this.name = name;
         this.businessId = businessId;
         this.tel = tel;
-        this.id = UUID.randomUUID().toString(); // 대체 유니크키 생성
+        this.agentId = UUID.randomUUID().toString(); // 대체 유니크키 생성
     }
 }

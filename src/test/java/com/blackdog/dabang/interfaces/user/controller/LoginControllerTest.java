@@ -36,8 +36,8 @@ class LoginControllerTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    final String TARGET_ID = "blackdog";
-    final String TARGET_PASSWORD = "blackdogPassword";
+    final String TARGET_ID = "agent_test";
+    final String TARGET_PASSWORD = "agent_test_password";
 
     @BeforeEach
     void setUp() {

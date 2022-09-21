@@ -1,13 +1,12 @@
 package com.blackdog.dabang.application.user;
 
-import com.blackdog.dabang.domain.user.UserCommand;
+import static com.blackdog.dabang.domain.user.User.UserType.AGENT;
+import static com.blackdog.dabang.domain.user.User.UserType.NORMAL;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
-import com.blackdog.dabang.domain.user.agent.AgentCommand;
 import com.blackdog.dabang.domain.user.agent.AgentCommand.AgentAddCommand;
-import com.blackdog.dabang.interfaces.user.dto.AgentDto;
 import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddRequest;
-import com.blackdog.dabang.interfaces.user.dto.UserDto;
-import com.blackdog.dabang.interfaces.user.dto.UserDto.UserAgentJoinRequest;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserAgentJoinResponse;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserJoinRequest;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserJoinResponse;
@@ -15,11 +14,6 @@ import com.blackdog.dabang.interfaces.user.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static com.blackdog.dabang.domain.user.User.UserType.AGENT;
-import static com.blackdog.dabang.domain.user.User.UserType.NORMAL;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserFacadeTest {

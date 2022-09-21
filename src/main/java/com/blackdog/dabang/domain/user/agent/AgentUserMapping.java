@@ -19,7 +19,7 @@ import static javax.persistence.FetchType.LAZY;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "agents")
+@Table(name = "agent_user_mapping")
 public class AgentUserMapping {
 
     @Id

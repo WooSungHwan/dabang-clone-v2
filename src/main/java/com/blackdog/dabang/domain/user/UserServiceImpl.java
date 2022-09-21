@@ -3,6 +3,7 @@ package com.blackdog.dabang.domain.user;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
 import com.blackdog.dabang.domain.user.agent.AgentStore;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserJoinResponse;
+import com.blackdog.dabang.interfaces.user.dto.UserDto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserStore store;
+    private final UserReader reader;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -44,6 +46,12 @@ public class UserServiceImpl implements UserService {
 
         User user = store.store(initUser);
         return new UserJoinResponse(user);
+    }
+
+    @Override
+    public UserResponse getUserBySeq(Long seq) {
+        User user = reader.getUserBySeq(seq);
+        return new UserResponse(user);
     }
 
 }

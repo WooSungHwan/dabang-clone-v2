@@ -61,8 +61,14 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/", "/favicon.ico", "/resources/**", "/error/**")
                 .permitAll()
+                // 헬스체크 api
                 .antMatchers("/api/v1/healths/**")
                 .permitAll()
+
+                // 매물 조회 api
+                .antMatchers(HttpMethod.GET, "/api/v1/rooms", "/api/v1/rooms/*")
+                .permitAll()
+
                 .antMatchers(HttpMethod.POST, "/api/v1/users/**", "/api/v1/login/**")
                 .permitAll()
                 .antMatchers("/api/v1/**")

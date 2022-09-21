@@ -42,8 +42,8 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             String jwtToken = jwtProvider.getJwtToken(request);
-            Long seq = jwtProvider.getSeq(jwtToken);
-            UserDetails userDetails = securityUserDetailsService.loadUserByUsername(String.valueOf(seq));
+            String userId = jwtProvider.getUserId(jwtToken);
+            UserDetails userDetails = securityUserDetailsService.loadUserByUsername(userId);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch(Exception e) {

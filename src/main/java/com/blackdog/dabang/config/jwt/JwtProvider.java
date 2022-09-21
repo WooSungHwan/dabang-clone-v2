@@ -51,4 +51,9 @@ public class JwtProvider {
                 .parseClaimsJws(jwtToken)
                 .getBody();
     }
+
+    public String getUserId(String jwtToken) {
+        return getClaims(jwtToken).get("userId", String.class);
+    }
+
 }

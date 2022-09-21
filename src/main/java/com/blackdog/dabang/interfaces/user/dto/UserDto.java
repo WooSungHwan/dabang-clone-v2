@@ -91,7 +91,7 @@ public class UserDto {
         private String token;
     }
 
-    @Value(staticConstructor = "of")
+    @Getter
     public static class UserResponse {
         private String id;
 
@@ -100,5 +100,12 @@ public class UserDto {
         private String name;
 
         private UserType type;
+
+        public UserResponse(User user) {
+            this.seq = user.getSeq();
+            this.name = user.getName();
+            this.id = user.getUserId();
+            this.type = user.getType();
+        }
     }
 }

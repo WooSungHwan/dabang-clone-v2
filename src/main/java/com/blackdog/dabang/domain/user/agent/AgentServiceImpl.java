@@ -1,13 +1,12 @@
 package com.blackdog.dabang.domain.user.agent;
 
-import com.blackdog.dabang.common.exception.InvalidParameterException;
 import com.blackdog.dabang.domain.user.User;
 import com.blackdog.dabang.domain.user.UserReader;
 import com.blackdog.dabang.domain.user.agent.AgentCommand.AgentAddCommand;
 import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentAddResponse;
+import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AgentServiceImpl implements AgentService {
 
     private final AgentStore store;
+    private final AgentReader reader;
     private final UserReader userReader;
 
     @Transactional
@@ -37,6 +37,13 @@ public class AgentServiceImpl implements AgentService {
         store.mappingAgentWithUser(mapping);
 
         return new AgentAddResponse(agent);
+    }
+
+    @Override
+    public AgentResponse getAgentByUserSeq(long userSeq) {
+        User user = userReader.getUserBySeq(userSeq);
+        Agent agent = reader.getAgentByUser(user);
+        return new AgentResponse(agent);
     }
 
 }
