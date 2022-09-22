@@ -43,7 +43,7 @@ class UserControllerTest {
 
     @Test
     void 부동산유저등록() throws Exception {
-        UserJoinRequest userJoinRequest = new UserJoinRequest("흑구", "test", "test");
+        UserJoinRequest userJoinRequest = new UserJoinRequest("흑구", "test_agent_1", "test_agent_password_1");
         AgentAddRequest agentAddRequest = new AgentAddRequest("흑구부동산.", "agent-10203910", "02-0000-1111");
         UserAgentJoinRequest request = new UserAgentJoinRequest(userJoinRequest, agentAddRequest);
 

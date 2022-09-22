@@ -59,7 +59,9 @@ class RoomControllerTest {
                 150_000L
         );
 
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEQUJBTkctU0VSVkVSIEFQSSIsImlzcyI6IkRBQkFORy1VU0VSIiwiaWF0IjoxNjYzNzM3MTE5LCJleHAiOjE2NjM3NjU5MTksInNlcSI6MSwidXNlcklkIjoiYWdlbnRfdGVzdCIsInR5cGUiOiJOT1JNQUwifQ.IJZqdbRL0QoROdJhSOy9yCBp0ujnrmoXW4W045OzGQo";
+        // 부동산유저
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEQUJBTkctU0VSVkVSIEFQSSIsImlzcyI6IkRBQkFORy1VU0VSIiwiaWF0IjoxNjYzODEwOTU2LCJleHAiOjE2NjQwOTg5NTYsInNlcSI6MiwidXNlcklkIjoiYWdlbnRfdGVzdCIsInR5cGUiOiJBR0VOVCJ9.KL4VwrE21U5_PZEzt93smcg_bLZpDeiRF4-r1dvUQ6E";
+//        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEQUJBTkctU0VSVkVSIEFQSSIsImlzcyI6IkRBQkFORy1VU0VSIiwiaWF0IjoxNjYzODExMDEwLCJleHAiOjE2NjQwOTkwMTAsInNlcSI6MSwidXNlcklkIjoidGVzdCIsInR5cGUiOiJOT1JNQUwifQ.eEEBV3CKRHxICPewv2JsUHr1iPYpzW9ZiGoYA2rs02w";
 
         mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)

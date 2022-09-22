@@ -1,5 +1,6 @@
 package com.blackdog.dabang.domain.user;
 
+import com.blackdog.dabang.common.exception.DabangBusinessException;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
 import com.blackdog.dabang.domain.user.agent.AgentStore;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserJoinResponse;
@@ -23,25 +24,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserJoinResponse join(UserJoinCommand command) {
+        if (reader.existsUserId(command.getId())) {
+            throw new DabangBusinessException("이미 가입한 유저 아이디입니다.");
+        }
         // 패스워드 암호화
         String encodedPassword = passwordEncoder.encode(command.getPassword());
 
         // 유저 생성
-        User initUser = command.toNormalUserEntity();
-        initUser.setEncodedPassword(encodedPassword);
-
-        User user = store.store(initUser);
-        return new UserJoinResponse(user);
-    }
-
-    @Transactional
-    @Override
-    public UserJoinResponse agentJoin(UserJoinCommand command) {
-        // 패스워드 암호화
-        String encodedPassword = passwordEncoder.encode(command.getPassword());
-
-        // 유저 생성
-        User initUser = command.toAgentUserEntity();
+        User initUser = command.toEntity();
         initUser.setEncodedPassword(encodedPassword);
 
         User user = store.store(initUser);

@@ -6,6 +6,7 @@ import com.blackdog.dabang.domain.room.Room.RoomCount;
 import com.blackdog.dabang.domain.room.Room.RoomPriceType;
 import com.blackdog.dabang.domain.room.Room.RoomType;
 import com.blackdog.dabang.domain.room.RoomCommand.AddRoomCommand;
+import com.blackdog.dabang.domain.user.User.UserType;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
 import com.blackdog.dabang.domain.user.agent.AgentCommand.AgentAddCommand;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserAgentJoinResponse;
@@ -52,6 +53,7 @@ public class TestConfig {
                                                            .id("agent_test")
                                                            .password("agent_test_password")
                                                            .name("agent_test유저")
+                                                           .userType(UserType.AGENT)
                                                            .build();
 
         AgentAddCommand agentAddCommand = AgentAddCommand.builder()
@@ -68,6 +70,7 @@ public class TestConfig {
                                                .id("test")
                                                .password("test_password")
                                                .name("test유저")
+                                               .userType(UserType.NORMAL)
                                                .build();
 
         userFacade.join(normalUserCommand);

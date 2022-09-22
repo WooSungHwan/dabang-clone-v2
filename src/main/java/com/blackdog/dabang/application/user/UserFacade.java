@@ -24,7 +24,7 @@ public class UserFacade {
     }
 
     public UserAgentJoinResponse agentJoin(UserJoinCommand userJoinCommand, AgentAddCommand agentAddCommand) {
-        UserJoinResponse user = service.agentJoin(userJoinCommand);
+        UserJoinResponse user = service.join(userJoinCommand);
         AgentAddResponse agent = agentService.addAgent(user.getSeq(), agentAddCommand);
         return UserAgentJoinResponse.of(user, agent);
     }

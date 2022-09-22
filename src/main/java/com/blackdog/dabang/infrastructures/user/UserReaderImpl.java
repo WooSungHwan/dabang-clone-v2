@@ -26,4 +26,9 @@ public class UserReaderImpl implements UserReader {
                          .orElseThrow(EntityNotFoundException::new);
     }
 
+    @Override
+    public boolean existsUserId(String userId) {
+        return repository.existsByUserId(userId);
+    }
+
 }

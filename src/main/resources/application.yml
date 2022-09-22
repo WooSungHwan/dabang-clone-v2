@@ -26,4 +26,4 @@ spring:
 dabang:
   jwt:
     secret: dabang-secret-key
-    expiration: 28800000
+    expiration: 288000000

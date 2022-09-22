@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -28,6 +30,7 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper;
     private final SecurityUserDetailsService securityUserDetailsService;
     private final JwtProvider jwtProvider;
+    private final UserDetailsChecker userDetailsChecker;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -44,6 +47,7 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
             String jwtToken = jwtProvider.getJwtToken(request);
             String userId = jwtProvider.getUserId(jwtToken);
             UserDetails userDetails = securityUserDetailsService.loadUserByUsername(userId);
+            userDetailsChecker.check(userDetails);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch(Exception e) {

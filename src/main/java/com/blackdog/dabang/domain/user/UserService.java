@@ -8,8 +8,6 @@ public interface UserService {
 
     UserJoinResponse join(UserJoinCommand command);
 
-    UserJoinResponse agentJoin(UserJoinCommand command);
-
     UserResponse getUserBySeq(Long userSeq);
 
 }

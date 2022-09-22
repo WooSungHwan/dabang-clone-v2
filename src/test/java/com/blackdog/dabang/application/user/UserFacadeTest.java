@@ -14,7 +14,9 @@ import com.blackdog.dabang.interfaces.user.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @SpringBootTest
 class UserFacadeTest {
 
@@ -27,8 +29,9 @@ class UserFacadeTest {
     void join() {
         UserJoinCommand command = UserJoinCommand.builder()
                 .name("흑구")
-                .id("test")
-                .password("test")
+                .id("test_join")
+                .password("test_join")
+                .userType(NORMAL)
                 .build();
         UserJoinResponse response = facade.join(command);
 
@@ -41,10 +44,10 @@ class UserFacadeTest {
 
     @Test
     void agentJoin() {
-        UserJoinRequest userJoinRequest = new UserJoinRequest("흑구", "test", "test");
+        UserJoinRequest userJoinRequest = new UserJoinRequest("흑구", "test_agent_join", "test_agent_join");
         AgentAddRequest agentAddRequest = new AgentAddRequest("흑구 부동산", "agent-10203910", "02-0000-1111");
 
-        UserJoinCommand userJoinCommand = mapper.toUserJoinCommand(userJoinRequest);
+        UserJoinCommand userJoinCommand = mapper.toUserJoinCommand(userJoinRequest, AGENT);
         AgentAddCommand agentAddCommand = mapper.toAgentAddCommand(agentAddRequest);
 
         UserAgentJoinResponse response = facade.agentJoin(userJoinCommand, agentAddCommand);

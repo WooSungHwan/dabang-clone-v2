@@ -29,14 +29,6 @@ public class UserDto {
 
         @NotBlank(message = "비밀번호를 입력해주세요.")
         private String password;
-
-        public UserJoinCommand toCommand() {
-            return UserJoinCommand.builder()
-                    .id(id)
-                    .password(password)
-                    .name(name)
-                    .build();
-        }
     }
 
     @Getter

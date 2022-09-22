@@ -30,8 +30,9 @@ class UserServiceImplTest {
     void join() {
         UserJoinCommand command = UserJoinCommand.builder()
                                                .name("흑구")
-                                               .id("test")
-                                               .password("test")
+                                               .id("test_service_test")
+                                               .password("test_service_test")
+                                               .userType(NORMAL)
                                                .build();
 
         UserJoinResponse response = service.join(command);
@@ -55,8 +56,9 @@ class UserServiceImplTest {
                 .name("흑구 부동산 유저")
                 .id("blackdog")
                 .password("blackdog")
+                .userType(AGENT)
                 .build();
-        UserJoinResponse response = service.agentJoin(command);
+        UserJoinResponse response = service.join(command);
 
         assertThat(response).extracting("seq").isNotNull();
         assertThat(response).extracting("name").isEqualTo(command.getName());

@@ -6,4 +6,6 @@ public interface UserReader {
 
     User getUserByUserId(String userId);
 
+    boolean existsUserId(String userId);
+
 }

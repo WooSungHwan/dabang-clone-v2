@@ -1,5 +1,6 @@
 package com.blackdog.dabang.domain.user.agent;
 
+import com.blackdog.dabang.domain.user.User.UserType;
 import com.blackdog.dabang.domain.user.UserCommand;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
 import com.blackdog.dabang.domain.user.UserService;
@@ -36,7 +37,7 @@ public class AgentServiceImplTest {
         UserJoinRequest userJoinRequest = new UserJoinRequest("흑구", "test", "test");
         AgentAddRequest agentAddRequest = new AgentAddRequest("흑구 부동산", "agent-10203910", "02-0000-1111");
 
-        UserJoinCommand userJoinCommand = userMapper.toUserJoinCommand(userJoinRequest);
+        UserJoinCommand userJoinCommand = userMapper.toUserJoinCommand(userJoinRequest, UserType.AGENT);
         AgentAddCommand agentAddCommand = userMapper.toAgentAddCommand(agentAddRequest);
 
         UserJoinResponse userJoinResponse = userService.join(userJoinCommand);

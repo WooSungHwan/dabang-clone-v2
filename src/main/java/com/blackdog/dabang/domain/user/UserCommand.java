@@ -14,23 +14,15 @@ public class UserCommand {
         private final String name;
         private final String id;
         private final String password;
+        private final UserType userType;
 
-        public User toNormalUserEntity() {
+        public User toEntity() {
             return User.builder()
                     .name(name)
                     .userId(id)
                     .password(password)
-                    .type(UserType.NORMAL)
+                    .type(userType)
                     .build();
-        }
-
-        public User toAgentUserEntity() {
-            return User.builder()
-                       .name(name)
-                       .userId(id)
-                       .password(password)
-                       .type(UserType.AGENT)
-                       .build();
         }
     }
 

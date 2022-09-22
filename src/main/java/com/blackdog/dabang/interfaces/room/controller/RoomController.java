@@ -1,5 +1,7 @@
 package com.blackdog.dabang.interfaces.room.controller;
 
+import static com.blackdog.dabang.config.security.Role.ROLE_AGENT;
+
 import com.blackdog.dabang.application.room.RoomFacade;
 import com.blackdog.dabang.common.response.success.RestResponse;
 import com.blackdog.dabang.config.security.SecurityUserDetails;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +37,7 @@ public class RoomController {
      * @param request
      * @return
      */
+    @Secured(ROLE_AGENT)
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestResponse> addRoom(@AuthenticationPrincipal SecurityUserDetails user,
                                                 @RequestBody @Validated AddRoomRequest request) {
