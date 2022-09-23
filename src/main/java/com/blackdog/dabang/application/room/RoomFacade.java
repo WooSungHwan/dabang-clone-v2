@@ -3,6 +3,7 @@ package com.blackdog.dabang.application.room;
 import com.blackdog.dabang.common.exception.DabangBaseException;
 import com.blackdog.dabang.common.exception.DabangBusinessException;
 import com.blackdog.dabang.domain.room.RoomCommand.AddRoomCommand;
+import com.blackdog.dabang.domain.room.RoomCommand.EditRoomCommand;
 import com.blackdog.dabang.domain.room.RoomService;
 import com.blackdog.dabang.domain.user.User.UserType;
 import com.blackdog.dabang.domain.user.UserService;
@@ -38,15 +39,26 @@ public class RoomFacade {
     }
 
     public RoomResponse addRoom(AddRoomCommand command) {
-        validateForUser(command);
+        validateForUser(command.getUserSeq(), "부동산 유저만 매물을 등록할 수 있습니다.");
         return service.addRoom(command);
     }
 
-    private void validateForUser(AddRoomCommand command) {
-        UserResponse user = userService.getUserBySeq(command.getUserSeq());
-        if (user.getType() != UserType.AGENT) {
-            throw new DabangBusinessException("부동산 유저만 매물을 등록할 수 있습니다.");
-        }
+    public RoomResponse editRoom(String roomId,
+                                 EditRoomCommand command) {
+        validateForUser(command.getUserSeq(), "부동산 유저만 매물을 수정할 수 있습니다.");
+        return service.editRoom(roomId, command);
     }
 
+    public void closeRoom(Long userSeq,
+                          String roomId) {
+        validateForUser(userSeq, "부동산 유저만 매물을 수정할 수 있습니다.");
+        service.closeRoom(roomId);
+    }
+
+    private void validateForUser(Long userSeq, String message) {
+        UserResponse user = userService.getUserBySeq(userSeq);
+        if (user.getType() != UserType.AGENT) {
+            throw new DabangBusinessException(message);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import static javax.persistence.FetchType.LAZY;
 
 import com.blackdog.dabang.common.exception.InvalidParameterException;
 import com.blackdog.dabang.common.exception.InvalidStatusException;
+import com.blackdog.dabang.domain.room.RoomCommand.EditRoomCommand;
 import com.blackdog.dabang.domain.user.User;
 import com.blackdog.dabang.domain.user.agent.Agent;
 import java.util.Objects;
@@ -23,7 +24,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.DynamicUpdate;
 
+@DynamicUpdate
 @Slf4j
 @Getter
 @Entity
@@ -114,6 +117,24 @@ public class Room {
             throw new InvalidStatusException("매물 상태를 확인해주세요.");
         }
         this.status = RoomStatus.PROCEED;
+    }
+
+    public boolean isMine(Long userSeq) {
+        return Objects.equals(this.userSeq, userSeq);
+    }
+
+    public boolean isClose() {
+        return this.status == RoomStatus.CLOSE;
+    }
+
+    public void edit(EditRoomCommand command) {
+        this.type = command.getType();
+        this.roomCount = command.getRoomCount();
+        this.address = command.getAddress();
+        this.priceType = command.getPriceType();
+        this.deposit = command.getDeposit();
+        this.monthPrice = command.getMonthPrice();
+        this.managePrice = command.getManagePrice();
     }
 
     @Getter

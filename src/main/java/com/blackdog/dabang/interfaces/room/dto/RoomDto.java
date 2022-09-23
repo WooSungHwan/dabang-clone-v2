@@ -6,6 +6,7 @@ import com.blackdog.dabang.domain.room.Room.RoomPriceType;
 import com.blackdog.dabang.domain.room.Room.RoomStatus;
 import com.blackdog.dabang.domain.room.Room.RoomType;
 import com.blackdog.dabang.domain.room.RoomCommand.AddRoomCommand;
+import com.blackdog.dabang.domain.room.RoomCommand.EditRoomCommand;
 import com.blackdog.dabang.interfaces.user.dto.AgentDto.AgentResponse;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -130,6 +131,62 @@ public class RoomDto {
                     .monthPrice(monthPrice)
                     .managePrice(managePrice)
                     .build();
+        }
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class EditRoomRequest {
+        @NotNull(message = "매물 유형을 입력해주세요.")
+        private RoomType type;
+
+        @NotNull(message = "매물 방 유형을 입력해주세요.")
+        private RoomCount roomCount;
+
+        @NotBlank(message = "매물 주소를 입력해주세요.")
+        private String address;
+
+        @NotNull(message = "매물 가격 유형을 입력해주세요.")
+        private RoomPriceType priceType;
+
+        @NotNull(message = "보증금을 입력해주세요.")
+        private Long deposit;
+
+        private Long monthPrice;
+
+        @NotNull(message = "관리비를 입력해주세요.")
+        private Long managePrice;
+
+        @JsonIgnore
+        @AssertTrue(message = "월세를 입력해주세요.")
+        private boolean isValidMonthPriceNotNull() {
+            if (priceType == RoomPriceType.MONTH) {
+                return Objects.nonNull(monthPrice);
+            }
+            return true;
+        }
+
+        @JsonIgnore
+        @AssertTrue(message = "월세를 입력할 수 없습니다.")
+        private boolean isValidMonthPriceIsNull() {
+            if (priceType != RoomPriceType.MONTH) {
+                return Objects.isNull(monthPrice);
+            }
+            return true;
+        }
+
+        public EditRoomCommand toCommand(Long userSeq) {
+            return EditRoomCommand.builder()
+                                 .userSeq(userSeq)
+                                 .type(type)
+                                 .roomCount(roomCount)
+                                 .address(address)
+                                 .priceType(priceType)
+                                 .deposit(deposit)
+                                 .monthPrice(monthPrice)
+                                 .managePrice(managePrice)
+                                 .build();
         }
     }
 

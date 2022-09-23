@@ -44,4 +44,26 @@ public class RoomCommand {
 
     }
 
+    @Getter
+    @Builder
+    @ToString
+    public static class EditRoomCommand {
+        private RoomType type;
+
+        private RoomCount roomCount;
+
+        private String address;
+
+        private RoomPriceType priceType;
+
+        private Long deposit;
+
+        private Long monthPrice;
+
+        private Long managePrice;
+
+        private Long userSeq;
+    }
+
+
 }

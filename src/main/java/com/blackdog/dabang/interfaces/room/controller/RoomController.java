@@ -6,6 +6,7 @@ import com.blackdog.dabang.application.room.RoomFacade;
 import com.blackdog.dabang.common.response.success.RestResponse;
 import com.blackdog.dabang.config.security.SecurityUserDetails;
 import com.blackdog.dabang.interfaces.room.dto.RoomDto.AddRoomRequest;
+import com.blackdog.dabang.interfaces.room.dto.RoomDto.EditRoomRequest;
 import com.blackdog.dabang.interfaces.room.dto.RoomDto.RoomDetailResponse;
 import com.blackdog.dabang.interfaces.room.dto.RoomDto.RoomResponse;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +44,16 @@ public class RoomController {
     public ResponseEntity<RestResponse> addRoom(@AuthenticationPrincipal SecurityUserDetails user,
                                                 @RequestBody @Validated AddRoomRequest request) {
         RoomResponse roomResponse = facade.addRoom(request.toCommand(user.getSeq()));
+        RestResponse response = RestResponse.of(roomResponse);
+        return ResponseEntity.ok(response);
+    }
+
+    @Secured(ROLE_AGENT)
+    @PutMapping(value = "/{roomId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestResponse> editRoom(@AuthenticationPrincipal SecurityUserDetails user,
+                                                 @PathVariable String roomId,
+                                                 @RequestBody @Validated EditRoomRequest request) {
+        RoomResponse roomResponse = facade.editRoom(roomId, request.toCommand(user.getSeq()));
         RestResponse response = RestResponse.of(roomResponse);
         return ResponseEntity.ok(response);
     }

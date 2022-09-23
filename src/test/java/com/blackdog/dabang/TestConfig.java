@@ -9,6 +9,7 @@ import com.blackdog.dabang.domain.room.RoomCommand.AddRoomCommand;
 import com.blackdog.dabang.domain.user.User.UserType;
 import com.blackdog.dabang.domain.user.UserCommand.UserJoinCommand;
 import com.blackdog.dabang.domain.user.agent.AgentCommand.AgentAddCommand;
+import com.blackdog.dabang.interfaces.room.dto.RoomDto.RoomResponse;
 import com.blackdog.dabang.interfaces.user.dto.UserDto.UserAgentJoinResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -30,7 +31,27 @@ public class TestConfig {
             addNormalUser();
             UserAgentJoinResponse userAgentJoinResponse = addAgentUser();
             addRoom(userAgentJoinResponse);
+            addRoom(userAgentJoinResponse);
+            addRoomClose(userAgentJoinResponse);
         };
+    }
+
+    private void addRoomClose(UserAgentJoinResponse userAgentJoinResponse) {
+        Long userSeq = userAgentJoinResponse.getUser()
+                                        .getSeq();
+        AddRoomCommand command = AddRoomCommand.builder()
+                                               .type(RoomType.APT)
+                                               .roomCount(RoomCount.ONEROOM)
+                                               .address("서울특별시 관악구 신림동")
+                                               .priceType(RoomPriceType.MONTH)
+                                               .deposit(10_000_000L)
+                                               .monthPrice(500_000L)
+                                               .managePrice(150_000L)
+                                               .userSeq(userSeq)
+                                               .build();
+        RoomResponse roomResponse = roomFacade.addRoom(command);
+        String roomId = roomResponse.getRoomId();
+        roomFacade.closeRoom(userSeq, roomId);
     }
 
     private void addRoom(UserAgentJoinResponse userAgentJoinResponse) {
