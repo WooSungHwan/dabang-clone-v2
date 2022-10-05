@@ -20,4 +20,6 @@ public interface RoomService {
 
     void closeRoom(String roomId);
 
+    void proceedRoom(String roomId);
+
 }

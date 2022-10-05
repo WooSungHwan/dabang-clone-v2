@@ -30,7 +30,7 @@ class LoginControllerTest {
 
     @Test
     void 로그인() throws Exception {
-        UserLoginRequest request = new UserLoginRequest("test", "test_password");
+        UserLoginRequest request = new UserLoginRequest("agent_test", "agent_test_password");
 
         mockMvc.perform(post(BASE_URL)
                        .contentType(MediaType.APPLICATION_JSON_VALUE)

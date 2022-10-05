@@ -1,13 +1,10 @@
 package com.blackdog.dabang.domain.room;
 
 import static javax.persistence.EnumType.STRING;
-import static javax.persistence.FetchType.LAZY;
 
 import com.blackdog.dabang.common.exception.InvalidParameterException;
 import com.blackdog.dabang.common.exception.InvalidStatusException;
 import com.blackdog.dabang.domain.room.RoomCommand.EditRoomCommand;
-import com.blackdog.dabang.domain.user.User;
-import com.blackdog.dabang.domain.user.agent.Agent;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -16,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

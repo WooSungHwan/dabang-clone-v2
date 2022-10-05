@@ -8,6 +8,7 @@ import com.blackdog.dabang.domain.room.Room.RoomPriceType;
 import com.blackdog.dabang.domain.room.Room.RoomStatus;
 import com.blackdog.dabang.domain.room.Room.RoomType;
 import com.blackdog.dabang.domain.room.RoomCommand.AddRoomCommand;
+import com.blackdog.dabang.interfaces.room.dto.RoomDto.RoomDetailResponse;
 import com.blackdog.dabang.interfaces.room.dto.RoomDto.RoomResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,52 @@ class RoomFacadeTest {
         assertThat(response).extracting("address").isEqualTo(command.getAddress());
         assertThat(response).extracting("viewCount").isEqualTo(0);
         assertThat(response).extracting("userSeq").isEqualTo(command.getUserSeq());
+    }
+
+    @Test
+    void closeRoom() {
+        AddRoomCommand command = AddRoomCommand.builder()
+                                               .userSeq(2L)
+                                               .type(RoomType.APT)
+                                               .roomCount(RoomCount.ONEROOM)
+                                               .address("서울특별시 관악구 신림동")
+                                               .priceType(RoomPriceType.MONTH)
+                                               .deposit(100_000_000L)
+                                               .monthPrice(500_000L)
+                                               .managePrice(150_000L)
+                                               .build();
+        RoomResponse response = facade.addRoom(command);
+
+        String roomId = response.getRoomId();
+        Long userSeq = command.getUserSeq();
+        facade.closeRoom(userSeq, roomId);
+
+        RoomDetailResponse roomDetail = facade.getRoomDetail(roomId);
+        assertThat(roomDetail).extracting("room").extracting("status").isEqualTo(RoomStatus.CLOSE);
+    }
+
+    @Test
+    void proceedRoom() {
+        AddRoomCommand command = AddRoomCommand.builder()
+                                               .userSeq(2L)
+                                               .type(RoomType.APT)
+                                               .roomCount(RoomCount.ONEROOM)
+                                               .address("서울특별시 관악구 신림동")
+                                               .priceType(RoomPriceType.MONTH)
+                                               .deposit(100_000_000L)
+                                               .monthPrice(500_000L)
+                                               .managePrice(150_000L)
+                                               .build();
+        RoomResponse response = facade.addRoom(command);
+
+        String roomId = response.getRoomId();
+        Long userSeq = command.getUserSeq();
+
+        facade.closeRoom(userSeq, roomId);
+        facade.proceedRoom(userSeq, roomId);
+
+        RoomDetailResponse roomDetail = facade.getRoomDetail(roomId);
+        assertThat(roomDetail).extracting("room").extracting("status").isEqualTo(RoomStatus.PROCEED);
     }
 
 }

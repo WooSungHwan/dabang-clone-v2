@@ -55,6 +55,11 @@ public class RoomFacade {
         service.closeRoom(roomId);
     }
 
+    public void proceedRoom(Long userSeq, String roomId) {
+        validateForUser(userSeq, "부동산 유저만 매물을 수정할 수 있습니다.");
+        service.proceedRoom(roomId);
+    }
+
     private void validateForUser(Long userSeq, String message) {
         UserResponse user = userService.getUserBySeq(userSeq);
         if (user.getType() != UserType.AGENT) {

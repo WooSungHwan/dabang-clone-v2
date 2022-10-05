@@ -25,6 +25,9 @@ public class TestConfig {
     @Autowired
     private RoomFacade roomFacade;
 
+    public static final String JWT_TOKEN_NORMAL = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEQUJBTkctU0VSVkVSIEFQSSIsImlzcyI6IkRBQkFORy1VU0VSIiwiaWF0IjoxNjY0OTU5OTEyLCJleHAiOjE2Njc4Mzk5MTIsInNlcSI6MSwidXNlcklkIjoidGVzdCIsInR5cGUiOiJOT1JNQUwifQ.T-xPNAAeLsPEdyak09PvQKy2wtIfxngHZGmcOJDWjy4";
+    public static final String JWT_TOKEN_AGENT = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEQUJBTkctU0VSVkVSIEFQSSIsImlzcyI6IkRBQkFORy1VU0VSIiwiaWF0IjoxNjY0OTYwMDIwLCJleHAiOjE2NjUyNDgwMjAsInNlcSI6MiwidXNlcklkIjoiYWdlbnRfdGVzdCIsInR5cGUiOiJBR0VOVCJ9.f8amqNIyIddfYOpb9czTFbQDMYMfQurS0XUe0bBbVxg";
+
     @Bean
     public ApplicationRunner applicationRunner() {
         return args -> {

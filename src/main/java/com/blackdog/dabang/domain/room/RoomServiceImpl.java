@@ -72,6 +72,13 @@ public class RoomServiceImpl implements RoomService {
         room.roomClose();
     }
 
+    @Transactional
+    @Override
+    public void proceedRoom(String roomId) {
+        Room room = reader.getRoomByRoomId(roomId);
+        room.roomProceed();
+    }
+
     private void validateIsClose(Room room) {
         if (!room.isClose()) {
             throw new DabangBusinessException("광고종료 상태인 매물만 수정할 수 있습니다.");
