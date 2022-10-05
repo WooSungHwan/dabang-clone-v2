@@ -1,8 +1,10 @@
 package com.blackdog.dabang.application.room;
 
+import static com.blackdog.dabang.TestConfig.JWT_TOKEN_AGENT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.blackdog.dabang.TestConfig;
+import com.blackdog.dabang.config.jwt.JwtProvider;
 import com.blackdog.dabang.domain.room.Room.RoomCount;
 import com.blackdog.dabang.domain.room.Room.RoomPriceType;
 import com.blackdog.dabang.domain.room.Room.RoomStatus;
@@ -10,6 +12,7 @@ import com.blackdog.dabang.domain.room.Room.RoomType;
 import com.blackdog.dabang.domain.room.RoomCommand.AddRoomCommand;
 import com.blackdog.dabang.interfaces.room.dto.RoomDto.RoomDetailResponse;
 import com.blackdog.dabang.interfaces.room.dto.RoomDto.RoomResponse;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +24,9 @@ class RoomFacadeTest {
 
     @Autowired
     private RoomFacade facade;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @Test
     void addRoom() {
@@ -94,6 +100,17 @@ class RoomFacadeTest {
 
         RoomDetailResponse roomDetail = facade.getRoomDetail(roomId);
         assertThat(roomDetail).extracting("room").extracting("status").isEqualTo(RoomStatus.PROCEED);
+    }
+
+    @Test
+    void getMyRoomList() {
+        Long userSeq = jwtProvider.getSeq(JWT_TOKEN_AGENT);
+        List<RoomResponse> myRoomList = facade.getMyRoomList(userSeq);
+        long count = myRoomList.stream()
+                               .filter(room -> room.getUserSeq() != userSeq)
+                               .count();
+
+        assertThat(count).isEqualTo(0);
     }
 
 }

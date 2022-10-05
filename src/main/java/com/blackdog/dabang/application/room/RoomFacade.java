@@ -30,6 +30,10 @@ public class RoomFacade {
         return service.getRoomList();
     }
 
+    public List<RoomResponse> getMyRoomList(Long userSeq) {
+        return service.getMyRoomList(userSeq);
+    }
+
     public RoomDetailResponse getRoomDetail(String roomId) {
         RoomResponse roomResponse = service.getRoomDetailByRoomId(roomId);
         UserResponse userResponse = userService.getUserBySeq(roomResponse.getUserSeq());

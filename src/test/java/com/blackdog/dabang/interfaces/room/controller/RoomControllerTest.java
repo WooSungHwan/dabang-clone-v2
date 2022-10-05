@@ -139,6 +139,27 @@ class RoomControllerTest {
     }
 
     @Test
+    void getMyRoomList() throws Exception {
+        mockMvc.perform(get(BASE_URL + "/mine")
+               .accept(MediaType.APPLICATION_JSON)
+               .header(HttpHeaders.AUTHORIZATION, "Bearer " + JWT_TOKEN_AGENT))
+               .andDo(print())
+               .andExpect(status().isOk())
+               // 매물
+               .andExpect(jsonPath("$.result[*].seq").exists())
+               .andExpect(jsonPath("$.result[*].roomId").exists())
+               .andExpect(jsonPath("$.result[*].status").exists())
+               .andExpect(jsonPath("$.result[*].type").exists())
+               .andExpect(jsonPath("$.result[*].roomCount").exists())
+               .andExpect(jsonPath("$.result[*].viewCount").exists())
+               .andExpect(jsonPath("$.result[*].address").exists())
+               .andExpect(jsonPath("$.result[*].priceType").exists())
+               .andExpect(jsonPath("$.result[*].deposit").exists())
+               .andExpect(jsonPath("$.result[*].monthPrice").exists())
+               .andExpect(jsonPath("$.result[*].managePrice").exists());
+    }
+
+    @Test
     void getRoomDetail() throws Exception {
         mockMvc.perform(get(BASE_URL + "/{roomId}", roomId))
                .andDo(print())

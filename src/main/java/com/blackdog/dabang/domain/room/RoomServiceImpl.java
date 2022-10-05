@@ -31,6 +31,14 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public List<RoomResponse> getMyRoomList(Long userSeq) {
+        List<Room> myRoomList = reader.getMyRoomList(userSeq);
+        return myRoomList.stream()
+                         .map(RoomResponse::new)
+                         .toList();
+    }
+
+    @Override
     public RoomResponse getRoomDetail(Long seq) {
         Room room = reader.getRoomBySeq(seq);
         return new RoomResponse(room);

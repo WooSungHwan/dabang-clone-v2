@@ -27,6 +27,11 @@ public class RoomReaderImpl implements RoomReader {
     }
 
     @Override
+    public List<Room> getMyRoomList(Long userSeq) {
+        return repository.findByUserSeq(userSeq);
+    }
+
+    @Override
     public Room getRoomByRoomId(String roomId) {
         return repository.findByRoomId(roomId)
                          .orElseThrow(EntityNotFoundException::new);

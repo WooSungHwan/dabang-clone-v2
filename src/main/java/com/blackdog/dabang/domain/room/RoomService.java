@@ -9,6 +9,8 @@ public interface RoomService {
 
     List<RoomResponse> getRoomList();
 
+    List<RoomResponse> getMyRoomList(Long userSeq);
+
     RoomResponse getRoomDetail(Long seq);
 
     RoomResponse getRoomDetailByRoomId(String roomId);

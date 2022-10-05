@@ -34,7 +34,9 @@ public class RoomController {
     private final RoomFacade facade;
 
     /**
-     * 매물 등록
+     * <pre>
+     *     매물 등록
+     * </pre>
      * @param user
      * @param request
      * @return
@@ -48,6 +50,15 @@ public class RoomController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * <pre>
+     *     매물 수정
+     * </pre>
+     * @param user
+     * @param roomId
+     * @param request
+     * @return
+     */
     @Secured(ROLE_AGENT)
     @PutMapping(value = "/{roomId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestResponse> editRoom(@AuthenticationPrincipal SecurityUserDetails user,
@@ -59,12 +70,29 @@ public class RoomController {
     }
 
     /**
-     * 매물 목록 조회
+     * <pre>
+     *     매물 목록 조회
+     * </pre>
      * @return
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestResponse> getRoomList() {
         List<RoomResponse> roomResponseList = facade.getRoomList();
+        RestResponse response = RestResponse.of(roomResponseList);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * <pre>
+     *     내 방 목록 조회
+     * </pre>
+     * @param user
+     * @return
+     */
+    @Secured(ROLE_AGENT)
+    @GetMapping(value = "/mine", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestResponse> getMyRoomList(@AuthenticationPrincipal SecurityUserDetails user) {
+        List<RoomResponse> roomResponseList = facade.getMyRoomList(user.getSeq());
         RestResponse response = RestResponse.of(roomResponseList);
         return ResponseEntity.ok(response);
     }

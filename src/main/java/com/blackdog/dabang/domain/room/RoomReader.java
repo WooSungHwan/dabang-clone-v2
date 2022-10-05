@@ -8,6 +8,8 @@ public interface RoomReader {
 
     List<Room> getRoomList();
 
+    List<Room> getMyRoomList(Long userSeq);
+
     Room getRoomByRoomId(String roomId);
 
     int getRoomCount(Long userSeq);
